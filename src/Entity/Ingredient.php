@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\IngredientRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use ProxyManager\ProxyGenerator\PropertyGenerator\PublicPropertiesMap;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
@@ -12,21 +14,28 @@ class Ingredient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 50)]
     #[Assert\NotBlank()]
     #[Assert\length(min: 2, max: 50)]
-    private $name;
+    private  string $name;
 
     #[ORM\Column(type: 'float')]
     #[Assert\NotNull]
     #[Assert\Positive]
-    private $price;
+    private float $price;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull]
-    private $createdAt;
+    private ?DateTimeImmutable $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
+
+
 
     public function getId(): ?int
     {
