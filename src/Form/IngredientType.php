@@ -31,7 +31,9 @@ class IngredientType extends AbstractType
                 ],
                 'constraints' => [
                     new Length(['min' => 2, 'max' => 50]),
-                    new NotBlank()
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un prénom'
+                    ])
                 ]
 
             ])

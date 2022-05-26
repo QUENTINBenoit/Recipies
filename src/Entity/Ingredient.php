@@ -19,7 +19,7 @@ class Ingredient
     private ?int $id;
 
     #[ORM\Column(type: 'string', length: 50)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank(message: 'Merci de saisir un nom d\'ingrédient')]
     #[Assert\length(min: 2, max: 50)]
     private  string $name;
 

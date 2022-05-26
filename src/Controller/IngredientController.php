@@ -39,8 +39,14 @@ class IngredientController extends AbstractController
         ]);
     }
 
-
-    #[Route('/add', name: 'ingredient_add', methods: ['GET', 'POST'])]
+    /**
+     * This function create an ingredient
+     *
+     * @param Request $request
+     * @param ManagerRegistry $doctrine
+     * @return Response
+     */
+    #[Route('/add', name: 'add', methods: ['GET', 'POST'])]
     public function addIngredient(Request $request, ManagerRegistry $doctrine): Response
     {
         $ingredient = new Ingredient();
@@ -58,6 +64,32 @@ class IngredientController extends AbstractController
         }
         // sinon j'affiche un formulaire d'ajout d'un ingredient
         return $this->render('ingredient/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * This function update an ingredient
+     *
+     * @param Ingredient $ingredient
+     * @param Request $request
+     * @param ManagerRegistry $doctrine
+     * @return Response
+     */
+    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    public function editIngredient(Ingredient $ingredient, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $form = $this->createForm(IngredientType::class, $ingredient);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $doctrine->getManager();
+            $em->flush();
+            $this->addFlash('info', 'l\'ingrédient ' . $ingredient->getName() . ' a bien été mis a jour.');
+            return $this->redirectToRoute('ingredient_list');
+        }
+        return $this->render('ingredient/update.html.twig', [
             'form' => $form->createView()
         ]);
     }
