@@ -29,6 +29,8 @@
 						<th scope="col">ID</th>
 						<th scope="col">PRICE</th>
 						<th scope="col">DATE</th>
+						<th scope="col">EDITION</th>
+						<th scope="col">SUPRESSION</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -39,6 +41,12 @@
 								<td>{{ingredient.id}}</td>
 								<td>{{ingredient.price}}</td>
 								<td>{{ingredient.createdAt|date("d/m/y")}}</td>
+								<td>
+									<a href="{{path('ingredient_edit', {id: ingredient.id})}}" class="btn btn-outline-info btn-sm">Modifier</a>
+								</td>
+								<td>
+									<a href="{{path('ingredient_delete', {id: ingredient.id})}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+								</td>
 							</tr>
 						{% endfor %}
 					</ul>
