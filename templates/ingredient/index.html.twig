@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SympRecipieIgredient
+{% endblock %}
+
+{% block body %}
+	<div class="container my-4">
+		{% if not ingredients is same as ([]) %}
+
+			<h1>
+				Mes  Ingrédients
+			</h1>
+			{# Affiche le compteur de la pagination #}
+			<div class="count mt-4">
+				<h4>
+					Il y a
+					{{ ingredients.getTotalItemCount }}
+					ingredients au total
+
+				</h4>
+			</div>
+			<table class="table table-hover ">
+				<thead>
+					<tr>
+						<th scope="col">NAME</th>
+						<th scope="col">ID</th>
+						<th scope="col">PRICE</th>
+						<th scope="col">DATE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ul>
+						{% for ingredient in ingredients %}
+							<tr class="table-dark">
+								<th scope="row">{{ingredient.name}}</th>
+								<td>{{ingredient.id}}</td>
+								<td>{{ingredient.price}}</td>
+								<td>{{ingredient.createdAt|date("d/m/y")}}</td>
+							</tr>
+						{% endfor %}
+					</ul>
+				</tbody>
+			</table>
+			{# Affichage de la pagination  #}
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(ingredients) }}
+			</div>
+		{% else %}
+			<h4>Il n'y a pas d'ingredients</h4>
+		{% endif %}
+	</div>
+
+
+{% endblock %}
