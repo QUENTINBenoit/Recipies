@@ -47,7 +47,7 @@ class Recipe
     #[ORM\Column(type: 'float', nullable: true)]
     #[Assert\Positive]
     #[Assert\Length(1001)]
-    private float $price;
+    private ?float $price;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isFavorite;
