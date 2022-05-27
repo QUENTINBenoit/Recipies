@@ -94,17 +94,15 @@ class IngredientController extends AbstractController
         ]);
     }
     /**
-     * this method delete an ingredient 
+     * This method delete an ingredient 
      *
      * @param Ingredient $ingredient
      * @param ManagerRegistry $doctrine
      * @return Response
      */
     #[Route('/delete/{id}', name: 'delete', methods: ['GET'])]
-
     public function deleteIngrdient(Ingredient $ingredient, ManagerRegistry $doctrine): Response
     {
-
         $em = $doctrine->getManager();
         $em->remove($ingredient);
         $em->flush();

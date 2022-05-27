@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\IngredientRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use ProxyManager\ProxyGenerator\PropertyGenerator\PublicPropertiesMap;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -26,6 +25,7 @@ class Ingredient
     #[ORM\Column(type: 'float')]
     #[Assert\NotNull]
     #[Assert\Positive]
+    #[Assert\Length(200)]
     private float $price;
 
     #[ORM\Column(type: 'datetime_immutable')]
