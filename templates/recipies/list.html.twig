@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Recettes
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h1>Liste de Mes Recettes
+		</h1>
+
+		{% if not recipiesViews is same as ([]) %}
+
+			<h1>
+				Mes  Ingrédients
+			</h1>
+
+			<a href="{{path('recipies_add') }}" class="btn btn-primary">Créer une Recette</a>
+
+			{# Affiche le compteur de la pagination #}
+			<div class="count mt-4">
+				<h4>
+					Il y a
+					{{ recipiesViews.getTotalItemCount }}
+					recettes au total
+
+				</h4>
+			</div>
+			<table class="table table-hover ">
+				<thead>
+					<tr>
+						<th scope="col">NAME</th>
+						<th scope="col">ID</th>
+						<th scope="col">PRICE</th>
+						<th scope="col">DIFFICULTE</th>
+						<th scope="col">DATE</th>
+						<th scope="col">EDITION</th>
+						<th scope="col">SUPRESSION</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ul>
+						{% for recipie in recipiesViews %}
+							<tr class="table-dark">
+								<th scope="row">{{recipie.name}}</th>
+								<td>{{recipie.id}}</td>
+								<td>
+									{% if recipie.price is null %}
+										Non Renseigné
+									{% else %}
+										{{recipie.price}}
+									{% endif %}
+								</td>
+								<td>
+									{% if recipie.difficulty is null %}
+										Non Renseigné
+									{% else %}
+										{{recipie.difficulty}}
+									{% endif %}
+								</td>
+								<td>{{recipie.createdAt|date("d/m/y")}}</td>
+								<td>
+									todo
+								</td>
+								<td>
+									todo
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</tbody>
+			</ul>
+		</tbody>
+	</table>
+	{# Affichage de la pagination  #}
+	<div class="navigation d-flex justify-content-center mt-4">
+		{{ knp_pagination_render(recipiesViews) }}
+	</div>
+{% else %}
+	<h4>Il n'y a pas de recettes</h4>
+{% endif %}</div></div>{% endblock %}

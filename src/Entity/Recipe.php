@@ -27,17 +27,14 @@ class Recipe
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Assert\Positive]
-    #[Assert\Length(1441)]
     private ?int $time;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Assert\Positive]
-    #[Assert\Length(51)]
     private ?int $nbPeaple;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Assert\Positive]
-    #[Assert\Length(6)]
     private ?int $difficulty;
 
     #[ORM\Column(type: 'text')]
@@ -46,7 +43,6 @@ class Recipe
 
     #[ORM\Column(type: 'float', nullable: true)]
     #[Assert\Positive]
-    #[Assert\Length(1001)]
     private ?float $price;
 
     #[ORM\Column(type: 'boolean')]
