@@ -9,12 +9,8 @@
 		</h1>
 
 		{% if not recipiesViews is same as ([]) %}
-
-			<h1>
-				Mes  Ingrédients
-			</h1>
-
 			<a href="{{path('recipies_add') }}" class="btn btn-primary">Créer une Recette</a>
+			{% include "partials/_flash.html.twig" %}
 
 			{# Affiche le compteur de la pagination #}
 			<div class="count mt-4">
@@ -54,27 +50,27 @@
 									{% if recipie.difficulty is null %}
 										Non Renseigné
 									{% else %}
-										{{recipie.difficulty}}
-									{% endif %}
-								</td>
+										{{recipie.difficulty}}</td>
+								{% endif %}
 								<td>{{recipie.createdAt|date("d/m/y")}}</td>
 								<td>
-									todo
+									<a href="{{path('recipies_edit', {id: recipie.id})}}" class="btn btn-outline-info btn-sm">Modifier</a>
 								</td>
+
 								<td>
-									todo
+									<a href="{{path('recipies_delete', {id: recipie.id})}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
 								</td>
 							</tr>
 						{% endfor %}
-					</tbody>
+					</ul>
 				</tbody>
-			</ul>
-		</tbody>
-	</table>
-	{# Affichage de la pagination  #}
-	<div class="navigation d-flex justify-content-center mt-4">
-		{{ knp_pagination_render(recipiesViews) }}
+			</table>
+			{# Affichage de la pagination  #}
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(recipiesViews) }}
+			</div>
+		{% else %}
+			<h4>Il n'y a pas de recettes</h4>
+		{% endif %}
 	</div>
-{% else %}
-	<h4>Il n'y a pas de recettes</h4>
-{% endif %}</div></div>{% endblock %}
+{% endblock %}

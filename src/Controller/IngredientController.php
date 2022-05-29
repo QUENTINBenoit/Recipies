@@ -86,7 +86,10 @@ class IngredientController extends AbstractController
 
             $em = $doctrine->getManager();
             $em->flush();
-            $this->addFlash('badge rounded-pill bg-info mt-2 text-white text-center', 'l\'ingrédient ' . $ingredient->getName() . ' a bien été mis a jour.');
+            $this->addFlash(
+                'badge rounded-pill bg-info mt-2 text-white text-center',
+                'l\'ingrédient ' . $ingredient->getName() . ' a bien été mis a jour.'
+            );
             return $this->redirectToRoute('ingredient_list');
         }
         return $this->render('ingredient/update.html.twig', [
@@ -100,7 +103,7 @@ class IngredientController extends AbstractController
      * @param ManagerRegistry $doctrine
      * @return Response
      */
-    #[Route('/delete/{id}', name: 'delete', methods: ['GET'])]
+    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
     public function deleteIngrdient(Ingredient $ingredient, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();

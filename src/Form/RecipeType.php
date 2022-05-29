@@ -123,11 +123,11 @@ class RecipeType extends AbstractType
             ])
             ->add('isFavorite', CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-check-label boroder ',
                 ],
                 'label' => 'Favoris ?',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-check-label me-4 mt-4 text-primary'
                 ],
                 'constraints' => [
                     new NotNull(),
@@ -142,7 +142,6 @@ class RecipeType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
-
             ])
             ->add('Submit', SubmitType::class, [
                 'attr' => [

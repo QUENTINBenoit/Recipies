@@ -6,13 +6,9 @@
 {% block body %}
 	<div class="container my-4">
 		{% if not ingredients is same as ([]) %}
-
-			<h1>
-				Mes  Ingrédients
-			</h1>
-
+			<h1>Mes  Ingrédients</h1>
 			<a href="{{path('ingredient_add') }}" class="btn btn-primary">Créer un Ingrédient</a>
-
+			{% include "partials/_flash.html.twig" %}
 			{# Affiche le compteur de la pagination #}
 			<div class="count mt-4">
 				<h4>

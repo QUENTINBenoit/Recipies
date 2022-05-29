@@ -25,7 +25,6 @@ class Ingredient
     #[ORM\Column(type: 'float')]
     #[Assert\NotNull]
     #[Assert\Positive]
-    #[Assert\Length(200)]
     private float $price;
 
     #[ORM\Column(type: 'datetime_immutable')]
