@@ -22,7 +22,8 @@
 	</head>
 	<body>
 		{% include "partials/_nav.html.twig" %}
+		<main class="container"> {% block body %}{% endblock %}
+			</main>
 
-		{% block body %}{% endblock %}
-	</body>
-</html>
+		</body>
+	</html>
