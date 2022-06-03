@@ -15,18 +15,27 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fullName')
-            ->add('pseudo')
-            ->add('email')
-            ->add('password', RepeatedType::class, [
-                'types' => PasswordType::class,
-                'first_option' => [
-                    'label' => 'Mot de passe',
+            ->add('fullName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '50'
                 ],
-                'second_option' => [
-                    "label" => 'Confirmation du mot de passe'
+                'label' => 'Nom',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
                 ],
-                'invalid_massage' => 'les mots de passe ne correspondent pas.'
+            ])
+            ->add('pseudo', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '50'
+                ],
+                'label' => 'Pseudo',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [

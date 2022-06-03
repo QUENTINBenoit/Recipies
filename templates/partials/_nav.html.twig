@@ -8,14 +8,14 @@
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav me-auto">
 				<li class="nav-item">
-					<a class="nav-link active" href="{{path('home')}}">Acceuil</a>
+					<a class="nav-link {{ currentPage =='home' ? 'active' }}" href="{{path('home')}}">Acceuil</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{path('ingredient_list')}}">
+					<a class="nav-link {{ currentPage =='ingredient_list' ? 'active' }}" href="{{path('ingredient_list')}}">
 						Mes Ingrédients</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{path('recipies_list')}}">Mes Recettes</a>
+					<a class="nav-link {{ currentPage =='recipies_list' ? 'active' }}" href="{{path('recipies_list')}}">Mes Recettes</a>
 				</li>
 			</ul>
 			<div class="navbar-nav">

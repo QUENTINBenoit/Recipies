@@ -21,6 +21,7 @@
 		{% endblock %}
 	</head>
 	<body>
+		{% set currentPage = app.request.get('_route') %}
 		{% include "partials/_nav.html.twig" %}
 		<main class="container"> {% block body %}{% endblock %}
 			</main>
