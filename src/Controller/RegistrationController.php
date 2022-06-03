@@ -13,10 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * Controller de registration
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @param ManagerRegistry $doctrine
+     * @return Response
+     */
     #[Route('/register', name: 'app_registration')]
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine): Response
     {
         $user = new User();
+        $user->setRoles(['ROLE_USER']);
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
@@ -40,9 +49,6 @@ class RegistrationController extends AbstractController
             );
             return $this->redirectToRoute('app_login');
         }
-
-
-
         return $this->render('registration/index.html.twig', [
             'formRegister' => $form->createView(),
         ]);
