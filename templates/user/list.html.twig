@@ -8,6 +8,7 @@
 
 	<div class="container my-4">
 		<h1>Liste des Users</h1>
+		{% include "partials/_flash.html.twig" %}
 		<table class="table table-hover ">
 			<thead>
 				<tr>
@@ -30,12 +31,15 @@
 							<td>{{listUser.email}}</td>
 							{# <td>{{listUser.roles}}</td> #}
 							<td>{{listUser.createdAt|date("d/m/y")}}</td>
-							{# <td>
-																																																																							<a href="{{path('ingredient_edit', {id: ingredient.id})}}" class="btn btn-outline-info btn-sm">Modifier</a>
-																																																																						</td>
-																																																																						<td>
-																																																																							<a href="{{path('ingredient_delete', {id: ingredient.id})}}" class="btn btn-outline-danger btn-sm">Supprimer</a>
-																																																																						</td> #}
+							<td>
+								<a href="{{path('user_edit', {id: listUser.id})}}" class="btn btn-outline-info btn-sm">Editer</a>
+							</td>
+							<td>
+								<a href="{{path('user_delete', {id: listUser.id}) }}" class="btn btn-outline-danger btn-sm">
+									c
+								</a>
+								{# {{ include('user/_delete_form.html.twig') }} #}
+							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
