@@ -11,12 +11,12 @@
 				{{ app.user.fullName}}
 			</h2>
 		{% else %}
-
 			<h1 class="display-4">Bienvenue sur SymRecipies</h1>
 			<p class="lead">SymRecipies est une application qui va permettre de créer des recettes à base d'igrédient que tu auras chosi toi meme</p>
 			<hr class"my-8">
-			<p>Pour commencer, rendez vous sur la page d'inscripeiton pour utiliser l'appilication.</p>
+			<p>Pour commencer, rendez vous sur la page d'inscription pour utiliser l'appilication.</p>
 			<a href="{{path('app_registration') }}" class="btn btn-primary btn-lgz" role="button">Inscription</a>
+			<a href="{{path('app_login')}}" class="btn btn-primary btn-lgz">Connection</a>
 		{% endif %}
 	</div>
 {% endblock %}

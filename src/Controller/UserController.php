@@ -45,6 +45,7 @@ class UserController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasherInterface
     ): Response {
         // \dd('formulaire d\'ajout');
+        $this->denyAccessUnlessGranted('USER_EDIT', $user, 'Vous ne passerez PAS !!');
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,19 +76,21 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $doctrine
      * @return Response
      */
-    #[Route('/{id}', name: 'delete',  methods: ['GET', 'POST'])]
+    #[Route('/{id}', name: 'delete',  methods: ['POST'])]
     public function deleteUser(
         User $user,
         Request $request,
         EntityManagerInterface $doctrine
     ): Response {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            $doctrine->remove($user);
+            $doctrine->flush();
+            $this->addFlash(
+                'badge rounded-pill bg-info mt-2 text-white text-center',
+                'L\'utilitsateur ' . $user->getFullName() . ' a bien été suprimé'
+            );
+        }
 
-        $doctrine->remove($user);
-        $doctrine->flush();
-        $this->addFlash(
-            'badge rounded-pill bg-info mt-2 text-white text-center',
-            'L\'utilitsateur ' . $user->getFullName() . ' a bien été suprimé'
-        );
 
         return $this->redirectToRoute('user_list', [], Response::HTTP_SEE_OTHER);
     }
