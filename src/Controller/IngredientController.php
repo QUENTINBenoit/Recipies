@@ -30,7 +30,7 @@ class IngredientController extends AbstractController
     {
 
         $ingredients = $paginator->paginate(
-            $repository->findAll(),
+            $repository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1),
             10
         );
@@ -55,6 +55,8 @@ class IngredientController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             //\dd($form->getData()); récupération des infos de mon formulaire
+
+            $ingredient->setUser($this->getUser()); // Je lie un ingrdient creer par l'user connecté  
             $em = $doctrine->getManager();
             $em->persist($ingredient);
             $em->flush();

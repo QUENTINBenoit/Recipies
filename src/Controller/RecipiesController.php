@@ -7,6 +7,7 @@ use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,16 +31,32 @@ class RecipiesController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
+
         $recipie = $paginator->paginate(
-            $recipeRepository->findAll(),
+            $recipeRepository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1),
             10
         );
-
         return $this->render('recipies/list.html.twig', [
             'recipiesViews' => $recipie,
         ]);
     }
+    /**
+     * Méthode permettant d'afficher le détail d'une recette 
+     *
+     * @param Recipe $recipe
+     * @return void
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{id}', name: 'shows', methods: ['GET'])]
+    public function delailRecipies(Recipe $recipe)
+    {
+        \dump($recipe);
+        return $this->render('recipies/show.html.twig', [
+            'recipe' => $recipe,
+        ]);
+    }
+
 
     /**
      * This method displays the form for adding a recipie
@@ -56,6 +73,7 @@ class RecipiesController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // \dd($form->getData());
+            $recipie->setUser($this->getUser());
             $em = $doctrine->getManager();
             $em->persist($recipie);
             $em->flush();

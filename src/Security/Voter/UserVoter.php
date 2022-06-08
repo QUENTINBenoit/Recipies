@@ -34,7 +34,7 @@ class UserVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                if ($currentUser === $subject || $this->security->isGranted('ROLE_USER')) {
+                if ($currentUser === $subject || $this->security->isGranted('ROLE_ADMIN')) {
                     return true;
                 }
                 if (count($userRoles) === 1 && $userRoles[0] == 'ROLE_USER') {
