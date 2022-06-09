@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 #[Route('/recipies', name: 'recipies_', requirements: ['id' => '\d+'])]
@@ -47,9 +48,10 @@ class RecipiesController extends AbstractController
      * @param Recipe $recipe
      * @return void
      */
-    #[IsGranted('ROLE_USER')]
+
+    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true ", statusCode: 404, message: 'Resource not found.')] //==> permet d'integre une logisue de restriction
     #[Route('/{id}', name: 'shows', methods: ['GET'])]
-    public function delailRecipies(Recipe $recipe)
+    public function show(Recipe $recipe)
     {
         \dump($recipe);
         return $this->render('recipies/show.html.twig', [
