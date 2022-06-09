@@ -64,15 +64,34 @@ class RecipeRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function findByRecipiesUser($id)
+    // public function findByRecipiesUser($id)
+    // {
+    //     $qb = $this->createQueryBuilder('ig');
+    //     // Je cible les ingrédients demandés($id)
+    //     $qb->where('ig.id = id');
+    //     $qb->setParameter(':id', $id);
+    //     $qb->leftJoin('ig.user', 'user');
+    //     $qb->addSelect('user');
+    //     $query = $qb->getQuery();
+    //     return $query->getOneOrNullResult();
+    // }
+
+    /**
+     * Cette méthode permet de récupérer les recettes publiques par ordre décroissant 
+     *
+     * @param integer $nbRecipes
+     * @return Recipe|null
+     */
+    public function findPubicRecipes(?int $nbRecipes): array
     {
-        $qb = $this->createQueryBuilder('ig');
-        // Je cible les ingredients demandée($id)
-        $qb->where('ig.id = id');
-        $qb->setParameter(':id', $id);
-        $qb->leftJoin('ig.user', 'user');
-        $qb->addSelect('user');
-        $query = $qb->getQuery();
-        return $query->getOneOrNullResult();
+        $qb = $this->createQueryBuilder('recipes')
+            ->Where('recipes.isPublic = 1')
+            ->orderBy('recipes.createdAt', 'DESC');
+
+        if ($nbRecipes !== 0 || $nbRecipes !== null) {
+            $qb->setMaxResults($nbRecipes);
+        }
+        return $qb->getQuery()
+            ->getResult();
     }
 }

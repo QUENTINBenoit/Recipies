@@ -48,8 +48,7 @@ class RecipiesController extends AbstractController
      * @param Recipe $recipe
      * @return void
      */
-
-    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true ", statusCode: 404, message: 'Resource not found.')] //==> permet d'integre une logisue de restriction
+    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true ", statusCode: 404, message: 'Resource not found.')] //==> permet d'intégrer une logique de restriction
     #[Route('/{id}', name: 'shows', methods: ['GET'])]
     public function show(Recipe $recipe)
     {
@@ -59,6 +58,24 @@ class RecipiesController extends AbstractController
         ]);
     }
 
+    #[Route('/public', name: 'public', methods: ['GET'])]
+    public function showPublic(
+        RecipeRepository $repository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+
+        // dd('Affichage des recettes publiques');
+        \dump($repository->findPubicRecipes(null));
+        $recipiesPublic = $paginator->paginate(
+            $repository->findPubicRecipes(null),
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('recipies/recipes_public.html.twig', [
+            'recipiesPublic' => $recipiesPublic,
+        ]);
+    }
 
     /**
      * This method displays the form for adding a recipie
