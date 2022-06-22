@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: MarkRepository::class)]
 #[UniqueEntity(
-    fields: ['user', 'recipe'],
+    fields: ['user', 'recipe'], // Couple recette useer "
     errorPath: 'user',
     message: 'Cet utilisateur a déja noté cette recette'
 )]
@@ -29,12 +29,14 @@ class Mark
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $created_At;
+
     #[ORM\ManyToOne(targetEntity: Recipe::class, inversedBy: 'marks')]
-    #[ORM\JoinColumn(nullable: false)]
     private Recipe $recipe;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTimeImmutable $created_At;
+
+
 
     public function __construct()
     {
@@ -91,6 +93,18 @@ class Mark
     public function setCreatedAt(\DateTimeImmutable $created_At): self
     {
         $this->created_At = $created_At;
+
+        return $this;
+    }
+
+    public function getYes(): ?Recipe
+    {
+        return $this->yes;
+    }
+
+    public function setYes(?Recipe $yes): self
+    {
+        $this->yes = $yes;
 
         return $this;
     }

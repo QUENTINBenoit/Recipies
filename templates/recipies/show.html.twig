@@ -15,10 +15,10 @@
 		{% endfor %}
 
 		<h1 class="mt-4">{{ recipe.name }}</h1>
-		{# 
-								<p>La moyenne de cette recette est de
-									{{ recipe.average|number_format(2, '.', ',') }}
-									/5</p> #}
+		<p>La moyenne de cette recette est de
+			<span class="badge bg-info">{{ recipe.average}}
+				/5</span>
+		</p>
 
 		<div>
 			<span class="badge bg-primary">Créée le
@@ -74,8 +74,8 @@
 		</div>
 
 		{# <div class="mark">
-					{{ form(form) }}
-					</div> #}
+																									{{ form(form) }}
+																									</div> #}
 
 	</div>
 {% endblock %}

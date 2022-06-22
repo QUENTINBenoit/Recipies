@@ -66,9 +66,10 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Mark::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Mark::class)]
     private $marks;
 
+    private ?float $average = null;
 
     public function __construct()
     {
@@ -244,7 +245,6 @@ class Recipe
 
         return $this;
     }
-
     /**
      * @return Collection<int, Mark>
      */
@@ -253,25 +253,23 @@ class Recipe
         return $this->marks;
     }
 
-    public function addMark(Mark $mark): self
+    /**
+     * Get the value of average
+     *
+     * @return ?float
+     */
+    public function getAverage(): ?float
     {
-        if (!$this->marks->contains($mark)) {
-            $this->marks[] = $mark;
-            $mark->setRecipe($this);
+        $marks = $this->marks;
+        if ($marks->toArray() === []) {
+            $this->average = null;
+            return $this->average;
         }
-
-        return $this;
-    }
-
-    public function removeMark(Mark $mark): self
-    {
-        if ($this->marks->removeElement($mark)) {
-            // set the owning side to null (unless already changed)
-            if ($mark->getRecipe() === $this) {
-                $mark->setRecipe(null);
-            }
+        $total = 0;
+        foreach ($marks as $mark) {
+            $total += $mark->getMark();
         }
-
-        return $this;
+        $this->average = $total / count($marks);
+        return $this->average;
     }
 }

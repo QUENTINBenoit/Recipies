@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Mark;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
@@ -52,6 +53,7 @@ class RecipiesController extends AbstractController
     #[Route('/{id}', name: 'shows', methods: ['GET'])]
     public function show(Recipe $recipe)
     {
+
         \dump($recipe);
         return $this->render('recipies/show.html.twig', [
             'recipe' => $recipe,

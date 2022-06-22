@@ -94,4 +94,24 @@ class RecipeRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+
+
+    public function findByMarksRecipes()
+    {
+        //     $qb = $this->createQueryBuilder('r');
+
+        //     $qb->where('r.name');
+
+        //     $qb->leftJoin('ig.user', 'user');
+        //     $qb->addSelect('user');
+        //     $query = $qb->getQuery();
+        //     return $query->getOneOrNullResult();
+        // }
+        return $this->createQueryBuilder('r')
+            ->where('r.name = ')
+            // ->leftJoin('m.recipe', 'r')
+            ->addSelect('r')
+            ->getQuery()
+            ->getResult();
+    }
 }
