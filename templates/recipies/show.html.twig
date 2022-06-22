@@ -11,7 +11,7 @@
 
 		<h1 class="mt-4">{{ recipe.name }}</h1>
 		<p>La moyenne de cette recette est de
-			<span class="badge bg-info">{{ recipe.average}}
+			<span class="badge bg-info">{{ recipe.average|number_format(2, '.', ',')}}
 				/5</span>
 		</p>
 
