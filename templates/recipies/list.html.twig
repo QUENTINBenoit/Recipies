@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Recettes
+
+{% block title %}
+	{{parent()}}
+	Mes recettes
 {% endblock %}
+
 
 {% block body %}
 	<div class="container my-5">
@@ -43,7 +47,7 @@
 									{% if recipie.price is null %}
 										Non Renseigné
 									{% else %}
-										{{recipie.price}}
+										{{recipie.price|number_format(2, '.', ',')}}
 									{% endif %}
 								</td>
 								<td>

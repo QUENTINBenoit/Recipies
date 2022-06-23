@@ -24,15 +24,14 @@
 
 		{% endif %}
 		<h1 class="text-center">Recettes de la comunauté</h1>
-
 		<div class="d-flex justify-content-between">
 			{% for recipe in recipiesPublic %}
-
 				<div class="card border-primary m-3 shadow-lg mb-5 bg-body rounded" style="max-width: 20rem;">
 					<div class="card-header">Recette n°{{ recipe.id}}</div>
 					<div class="card-body">
-						<h4 class="card-title">temps :
-							{{ recipe.name}}</h4>
+						<h4 class="card-title">
+							<a href="{{path('recipies_shows', {id: recipe.id} ) }}">{{ recipe.name}}</a>
+						</h4>
 						<p class="card-text">{{ recipe.description |slice(0, 100) ~ '...' }}</p>
 					</div>
 				</div>

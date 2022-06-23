@@ -7,6 +7,7 @@ use App\Form\IngredientType;
 use App\Repository\IngredientRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +80,7 @@ class IngredientController extends AbstractController
      * @param ManagerRegistry $doctrine
      * @return Response
      */
+
     #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function editIngredient(Ingredient $ingredient, Request $request, ManagerRegistry $doctrine): Response
     {
@@ -105,6 +107,7 @@ class IngredientController extends AbstractController
      * @param ManagerRegistry $doctrine
      * @return Response
      */
+
     #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
     public function deleteIngrdient(Ingredient $ingredient, ManagerRegistry $doctrine): Response
     {

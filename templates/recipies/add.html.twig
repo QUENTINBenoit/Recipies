@@ -1,17 +1,16 @@
 {% extends "base.html.twig" %}
-
+{% block title %}
+	{{parent()}}
+	Nouvelle recette
+{% endblock %}
 
 {% block body %}
 	<div class="container">
 		<h1 class="mt-4">Création d'une Recette</h1>
-
-		{# {{form(formRecipe, {'attr': {'novalidate': 'novalidate'}}) }} #}
-		{# {{ form_widget(formRecipe)}}
-																																															{# {{ form_row(formRecipe.imageFile) }} #}
-		{# {{form_end(formRecipe)}} #}
 		{{ form_start(formRecipe) }}
 
-			<div class="form-group"> {{ form_label(formRecipe.name) }}
+		<div class="form-group">
+			{{ form_label(formRecipe.name) }}
 			{{ form_widget(formRecipe.name) }}
 			<div class="form-error">
 				{{ form_errors(formRecipe.name) }}
