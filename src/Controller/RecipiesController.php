@@ -51,7 +51,7 @@ class RecipiesController extends AbstractController
      * @param Recipe $recipe
      * @return void
      */
-    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true ", statusCode: 404, message: 'Resource not found.')] //==> permet d'intégrer une logique de restriction
+    #[Security("is_granted('ROLE_USER') and (recipe.getIsPublic() === true || user === recipe.getUser() )", statusCode: 404, message: 'Resource not found.')] //==> permet d'intégrer une logique de restriction
     #[Route('/{id}', name: 'shows', methods: ['GET', 'POST'])]
     public function show(
         Recipe $recipe,

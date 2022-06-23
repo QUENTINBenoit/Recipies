@@ -16,8 +16,11 @@
 		</p>
 
 		<div>
-			<span class="badge bg-primary">Créée le
+			<span class="badge bg-primary my-4">Créée le
 				{{ recipe.createdAt|date('d/m/Y') }}</span>
+		</div>
+		<div class="recipe__image">
+			<img style="max-width: 15rem;" class="rounded" src="{{ vich_uploader_asset(recipe, 'imageFile') }}">
 		</div>
 
 		<div class="mt-4">

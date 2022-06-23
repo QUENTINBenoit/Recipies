@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Repository\IngredientRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -20,9 +21,19 @@ use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RecipeType extends AbstractType
 {
+    private $token;
+    public function __construct(TokenStorageInterface $token)
+    {
+        $this->token = $token;
+    }
+
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -133,9 +144,22 @@ class RecipeType extends AbstractType
                     new NotNull(),
                 ],
             ])
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Image de la Recette',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'required' => false
+            ])
             ->add('ingredients', EntityType::class, [
                 'class' => Ingredient::class,
-                'label' => 'Les Ingredients',
+                'query_builder' => function (IngredientRepository $r) {
+                    return $r->createQueryBuilder('i')
+                        ->where('i.user = :user')
+                        ->orderBy('i.name', 'ASC')
+                        ->setParameter('user', $this->token->getToken()->getUser());
+                },
+                'label' => 'Les ingrédients',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
@@ -143,6 +167,7 @@ class RecipeType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
+
             ->add('Submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
