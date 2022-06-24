@@ -30,8 +30,13 @@
 	<body>
 		{% set currentPage = app.request.get('_route') %}
 		{% include "partials/_nav.html.twig" %}
-		<main class="container"> {% block body %}{% endblock %}
-			</main>
-			{% include "partials/_footer.html.twig" %}
-		</body>
-	</html>
+		{% include "partials/_flash.html.twig" %}
+		<main class="container">
+			{% block body %}
+
+				{% include "partials/_flash.html.twig" %}
+			{% endblock %}
+		</main>
+		{% include "partials/_footer.html.twig" %}
+	</body>
+</html>

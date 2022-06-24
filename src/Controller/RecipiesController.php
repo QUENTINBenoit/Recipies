@@ -103,7 +103,7 @@ class RecipiesController extends AbstractController
     ): Response {
 
         // dd('Affichage des recettes publiques');
-        \dump($repository->findPubicRecipes(null));
+        // \dump($repository->findPubicRecipes(null));
         $recipiesPublic = $paginator->paginate(
             $repository->findPubicRecipes(null),
             $request->query->getInt('page', 1),
