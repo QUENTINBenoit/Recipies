@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Service\MailService;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\MailerInterface;
+
 use Symfony\Component\Mime\Email;
 
 class ContactController extends AbstractController
@@ -19,7 +20,7 @@ class ContactController extends AbstractController
     public function index(
         Request $request,
         ManagerRegistry $doctrine,
-        MailerInterface $mailer
+        MailService $mailService
     ): Response {
         $contact = new Contact();
         // Recupeéeratiopn des infos utilisateur connecté 
@@ -38,19 +39,17 @@ class ContactController extends AbstractController
             $em->persist($contact);
             $em->flush();
 
-            $email = (new TemplatedEmail())
-                ->from($contact->getEmail())
-                ->to('benquelm@gmail.com')
-                ->subject($contact->getSubject())
-                // path of the Twig template to render
-                ->htmlTemplate('email/contact.html.twig')
-                // pass variables (name => value) to the template
-                ->context([
-                    'contact' => $contact
-                ]);
-            // \dd($email);
 
-            $mailer->send($email);
+            $mailService->sendEmail(
+                $contact->getEmail(),
+                $contact->getSubject(),
+                'email/contact.html.twig',
+                ['contact' => $contact],
+                'admin@admin.com',
+            );
+
+
+
             $this->addFlash('badge rounded-pill bg-info mt-2 text-white text-center', 'Votre demande a été envoyé avec succès !');
 
             return $this->redirectToRoute('contact');
