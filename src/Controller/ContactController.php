@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,11 +38,16 @@ class ContactController extends AbstractController
             $em->persist($contact);
             $em->flush();
 
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from($contact->getEmail())
                 ->to('benquelm@gmail.com')
                 ->subject($contact->getSubject())
-                ->html($contact->getMessage());
+                // path of the Twig template to render
+                ->htmlTemplate('email/contact.html.twig')
+                // pass variables (name => value) to the template
+                ->context([
+                    'contact' => $contact
+                ]);
             // \dd($email);
 
             $mailer->send($email);
