@@ -42,7 +42,7 @@ class RecipeTest extends KernelTestCase
         $recipe = $this->getEntity();
         $recipe->setName('');
         $errors = $container->get('validator')->validate($recipe);
-        $this->assertCount(1, $errors);
+        $this->assertCount(2, $errors);
     }
 
     public function testGetAverage()

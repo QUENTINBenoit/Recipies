@@ -24,12 +24,12 @@ class HomeTest extends WebTestCase
 
         $this->assertSelectorTextContains('h1', 'Bienvenue sur SymRecipies');
     }
-    public function testLoginButtion()
+    public function testLoginButton()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
 
-        // Je sumule un clic sur bouton connecter
+        // Je simule un clic sur bouton connecter
         $client->clickLink('Connection');
 
         $this->assertResponseIsSuccessful();
