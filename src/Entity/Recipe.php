@@ -78,7 +78,7 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Mark::class)]
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Mark::class, orphanRemoval: true)]
     private $marks;
 
     private ?float $average = null;
@@ -292,12 +292,26 @@ class Recipe
 
         return $this;
     }
-    /**
-     * @return Collection<int, Mark>
-     */
-    public function getMarks(): Collection
+    public function addMark(Mark $mark): self
     {
-        return $this->marks;
+        if (!$this->marks->contains($mark)) {
+            $this->marks[] = $mark;
+            $mark->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMark(Mark $mark): self
+    {
+        if ($this->marks->removeElement($mark)) {
+            // set the owning side to null (unless already changed)
+            if ($mark->getRecipe() === $this) {
+                $mark->setRecipe(null);
+            }
+        }
+
+        return $this;
     }
 
     /**
